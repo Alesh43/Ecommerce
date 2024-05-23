@@ -1,3 +1,5 @@
+import path from 'path';
+import { title } from 'process';
 import { Link, useLocation } from 'react-router-dom'
 
 // conditional statement
@@ -21,6 +23,10 @@ const NavItems = [
     title: "Contact",
     path: "/contact"
   },
+  {
+    title: "Post",
+    path: "/post"
+  }
 ]
 
 
