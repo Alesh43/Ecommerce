@@ -7,6 +7,8 @@ import ProductPage from "./Pages/Products/Products";
 import SingleProduct from "./Pages/Products/product-detail";
 import Post from "./component/Blog/post";
 import SinglePost from "./Pages/Posts/post-detail";
+import RegisterForm from "./Pages/register/register-form";
+import SigninForm from "./Pages/sign-in/signin-form";
 
 const App = () => {
   return (
@@ -19,8 +21,10 @@ const App = () => {
         <Route path="/Pricing" element={<Pricing/>} />
         <Route path="/Contact" element={<Contact/>} />
         <Route path="/Post" element={<Post/>} />
-        
+    
         <Route path="/Post/:id" element={<SinglePost/>} />
+        <Route path="/Register" element={<RegisterForm/>} />
+        <Route path="/Signin" element={<SigninForm/>} />
       </Routes>
     </BrowserRouter>
   );

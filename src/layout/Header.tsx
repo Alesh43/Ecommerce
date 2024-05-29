@@ -2,6 +2,7 @@ import path from "path";
 import { title } from "process";
 import { Link, useLocation } from "react-router-dom";
 import Button from "../component/reusable/button/button";
+import { useEffect, useState } from "react";
 
 // conditional statement
 //  let age =12;
@@ -32,6 +33,15 @@ const NavItems = [
 
 const Header = () => {
   const location = useLocation();
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname === "/Signin") {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [location]);
 
   return (
     <nav className="bg-white border-gray-200 ">
@@ -93,12 +103,28 @@ const Header = () => {
           </ul>
         </div>
         <div className="flex gap-2 items-center">
-          <Button buttonType={"button"} buttonColor={{ outline: true }} rounded>
-            Sign In
-          </Button>
-          <Button buttonType={"button"} buttonColor={{ primary: true }} rounded>
-            Register
-          </Button>
+          <Link to="/Signin">
+            <Button
+              buttonType={"button"}
+              buttonColor={isLogin ?{ primary: true }:{
+                outline: true}
+              }
+              rounded
+            >
+              Sign In
+            </Button>
+          </Link>
+          <Link to="/Register">
+            <Button
+              buttonType={"button"}
+              buttonColor={!isLogin ?{ primary: true }:{
+                outline: true}
+              }
+              rounded
+            >
+              Register
+            </Button>
+          </Link>
         </div>
       </div>
     </nav>
