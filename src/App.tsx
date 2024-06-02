@@ -9,6 +9,9 @@ import Post from "./component/Blog/post";
 import SinglePost from "./Pages/Posts/post-detail";
 import RegisterForm from "./Pages/register/register-form";
 import SigninForm from "./Pages/sign-in/signin-form";
+import ContactPage from "./Pages/Contact/contact-page";
+import NotFound from "./Pages/not-found/not-found";
+
 
 const App = () => {
   return (
@@ -25,6 +28,9 @@ const App = () => {
         <Route path="/Post/:id" element={<SinglePost/>} />
         <Route path="/Register" element={<RegisterForm/>} />
         <Route path="/Signin" element={<SigninForm/>} />
+        <Route path="/Contactpage" element={<ContactPage/>} />
+        
+        <Route path="*" element={<NotFound/>} />
       </Routes>
     </BrowserRouter>
   );

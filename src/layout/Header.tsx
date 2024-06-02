@@ -15,19 +15,19 @@ const NavItems = [
   },
   {
     title: "Products",
-    path: "/products",
+    path: "/Products",
   },
   {
     title: "Pricing",
-    path: "/pricing",
+    path: "/Pricing",
   },
   {
     title: "Contact",
-    path: "/contact",
+    path: "/Contact",
   },
   {
     title: "Post",
-    path: "/post",
+    path: "/Post",
   },
 ];
 
