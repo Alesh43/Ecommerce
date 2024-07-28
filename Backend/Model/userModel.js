@@ -11,6 +11,16 @@ const mongoose = require('mongoose');
         required: true
     },
 
+    role:{
+        type: String,
+        default: false
+    },
+
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
+
     userDetail: {
         firstName:{
             type: String
@@ -30,6 +40,7 @@ const mongoose = require('mongoose');
         gender:{
             type: String
         },
+
     }
 });
 module.exports=  mongoose.model('User', UserSchema)
