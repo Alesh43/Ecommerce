@@ -8,14 +8,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail(userEmail,subject) {
+async function sendEmail(mailOptions) {
  
   const info = await transporter.sendMail({
     from: "user@user.com", 
-    to: `basantrai2486@gmail.com`, 
-    subject: subject, 
-    text: "Hello world?", 
-    html: "<b>Hello world?</b>", 
+    to: mailOptions.userEmail, 
+    subject:mailOptions.subject, 
+    text: mailOptions.text,
+    html: mailOptions.html,
   });
 
   console.log("Message sent: %s", info.messageId);

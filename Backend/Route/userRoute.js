@@ -7,6 +7,7 @@ const {
   login,
   getUserById,
   deleteUser,
+  confirmUser,
 } = require("../Controller/userController");
 const { jwtMiddleware } = require("../middleware/middleware");
 const router = express.Router();
@@ -17,5 +18,6 @@ router.put("/update-user/:id", jwtMiddleware, updateUser);
 router.post("/login", login);
 router.get("/getuser/:id", getUserById);
 router.delete("/delete/:id", jwtMiddleware, deleteUser);
+router.get('/confirm-email/:token',confirmUser);
 
 module.exports = router;

@@ -4,39 +4,88 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const sendEmail = require("../utils/sendEmail");
 
+const SECRETKEY = process.env.SECRET_KEY
+
+
 exports.CreateUser = async (req, res) => {
-  sendEmail();
-  // const checkEmail = await UserModel.findOne({ email: req.body.email });
-  // const checkContact = await UserModel.findOne({
-  //   "userDetail.phoneNumber": req.body.phoneNumber,
-  // });
+  
+  const checkEmail = await UserModel.findOne({ email: req.body.email });
+  const checkContact = await UserModel.findOne({
+    "userDetail.phoneNumber": req.body.phoneNumber,
+  });
 
-  // if (checkContact) {
-  //   return res.status(400).json({ error: "Contact already exist" });
-  // }
+  if (checkContact) {
+    return res.status(400).json({ error: "Contact already exist" });
+  }
 
-  // if (checkEmail) {
-  //   return res.status(400).json({ error: "Email already exist" });
-  // } else {
-  //   const hashPassword = await bcrypt.hash(req.body.password, 10);
-  //   const createUser = await new UserModel({
-  //     email: req.body.email,
-  //     password: hashPassword,
-  //     "userDetail.firstName": req.body.firstName,
-  //     "userDetail.middleName": req.body.middleName,
-  //     "userDetail.lastName": req.body.lastName,
-  //     "userDetail.phoneNumber": req.body.phoneNumber,
-  //   });
+  if (checkEmail) {
+    return res.status(400).json({ error: "Email already exist" });
+  } 
 
-  //   const saveUser = await createUser.save();
-  //   if (!saveUser) {
-  //     return res.status(400).json({ error: "User registration failed" });
-  //   } else {
-  //     return res.status(200).json({ message: "User registration successful" });
-  //   }
-  // }
+  const token = await jwt.sign(
+    {
+      name: req.body.firstName,
+      email: req.body.email,
+    }, SECRETKEY,
+    { expiresIn: "1h" }
+  )
+
+   if(!token){
+    return res.status(400).json({error:"Failed o generate token"});
+   }
+
+   const url = `${process.env.APP_URL}/confirm/${token}`
+
+   const mailOptions = {
+    userEmail: req.body.email,
+    subject: "Email verification",
+    text: "Please verify your email",
+    html: `<a href="${url}"><button>Verify Account<?button></a>`
+   }
+   sendEmail(mailOptions);
+
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    const createUser = await new UserModel({
+      email: req.body.email,
+      password: hashPassword,
+      "userDetail.firstName": req.body.firstName,
+      "userDetail.middleName": req.body.middleName,
+      "userDetail.lastName": req.body.lastName,
+      "userDetail.phoneNumber": req.body.phoneNumber,
+    });
+
+    const saveUser = await createUser.save();
+    if (!saveUser) {
+      return res.status(400).json({ error: "User registration failed" });
+    } else {
+      return res.status(200).json({ message: "User registration successful" });
+    }
+  
 };
 
+//Verify Email
+exports.confirmUser = async(req,res) => {
+  const {token} = req.params
+
+  const {email,name} = jwt.decode(token);
+  console.log(email)
+
+  const user = await UserModel.findOne({email:email});
+  if(!user){
+    return res.status(400).json({error:"User not found"});
+  }
+  if(user.isVerified){
+    return res.status(400).json({error:"Already verified,Please login to continue"})
+  }
+  user.isVerified = true;
+  await user.save();
+  return res.status(200).json({message: "User verified successfully"});
+
+  
+}
+
+
+//Get all user
 exports.getAllUser = async (req, res) => {
   const users = await UserModel.find();
   if (!users) {
@@ -70,6 +119,10 @@ exports.login = async (req, res) => {
 
   if (!checkUser) {
     return res.json({ error: "User not found" }).status(400);
+  }
+
+  if(!checkUser.isVerified){
+    return res.status(400).json({error:"Please verify your email"})
   }
   const checkPassword = await bcrypt.compare(password, checkUser.password);
 
