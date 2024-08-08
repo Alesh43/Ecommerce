@@ -7,8 +7,8 @@ const Defaultlayout = () => {
   return (
     <div>
       <Header/>
-      <Footer/>
       <Outlet/>
+      <Footer/>
     </div>
   )
 }

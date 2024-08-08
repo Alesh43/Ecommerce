@@ -1,13 +1,11 @@
-
 import React from 'react'
 
-
-const Dashboard = () => {
+const GetOrder = () => {
   return (
     <div>
-     
+      
     </div>
   )
 }
 
-export default Dashboard
+export default GetOrder

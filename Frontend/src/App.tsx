@@ -14,6 +14,12 @@ import NotFound from "./Pages/not-found/not-found";
 import Dashboard from "./Pages/Dashboard/dashboard";
 import Authlayout from "./layout/Auth-layout/auth";
 import Defaultlayout from "./layout/Default/Default-layout";
+import ProductForm from "./Pages/Dashboard/product/product";
+import GetProduct from "./Pages/Dashboard/product/get-product";
+import Customers from "./Pages/Dashboard/customers/customers";
+import CustomerPage from "./Pages/Dashboard/customers/customers";
+import GetCategory from "./Pages/Dashboard/category/get-category";
+import GetOrder from "./Pages/Dashboard/orders/get-order";
 
 
 const App = () => {
@@ -42,6 +48,21 @@ const App = () => {
       {/* Authentication Layout */}
         <Route element={<Authlayout/>}>
           <Route path="/dashboard" element={<Dashboard/>} />
+          
+          {/* {product} */}
+          <Route path="/dashboard/addProduct" element={<ProductForm/>} />
+          <Route path="/dashboard/Products" element={<GetProduct/>} />
+
+          {/* {customers} */}
+          <Route path="/dashboard/customers" element={<CustomerPage/>} />
+
+          {/* {category} */}
+          <Route path="/dashboard/category" element={<GetCategory/>} />
+
+         {/* {orders} */}
+          <Route path="/dashboard/orders" element={<GetOrder/>} />
+
+          
         </Route>
       </Routes>
     </BrowserRouter>

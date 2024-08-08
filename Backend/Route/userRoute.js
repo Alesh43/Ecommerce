@@ -21,7 +21,7 @@ router.put("/update-user/:id", jwtMiddleware, updateUser);
 router.post("/login", login);
 router.get("/getuser/:id", getUserById);
 router.delete("/delete/:id", jwtMiddleware, deleteUser);
-router.get('/confirm-email/:token',confirmUser);
+router.get('/confirm/:token',confirmUser);
 router.post('/forgot-password/',forgotPassword);
 router.post('/reset-password/:token', resetPassword);
 router.post('/resend-verification',resendConfirmation)
