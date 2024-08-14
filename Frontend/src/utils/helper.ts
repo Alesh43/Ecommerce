@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import { AppConfig } from "../config/app.config";
 
 export function errorMessage(error: unknown){
     const errorMessage =
@@ -7,4 +8,11 @@ export function errorMessage(error: unknown){
     : "Something went wrong";
   return errorMessage;  
 
+}
+
+//................display Image.................
+
+export function displayImage(path?:string) {
+  const imageUrl = `${AppConfig.IMAGE_URL}/${path}`
+  return imageUrl;
 }

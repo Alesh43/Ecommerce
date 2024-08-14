@@ -1,50 +1,56 @@
 import { useEffect, useState } from "react";
 import { Iproduct } from "../../interface/product";
+import useSWR from "swr";
+import { getProductById } from "../../API/productApi";
+import { displayImage } from "../../utils/helper";
+import RelatedProducts from "./related-products";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 const ProductDetail = ({ id }: Props) => {
-  const [product, setProduct] = useState<Iproduct>();
+  const {data:product} = useSWR(`getproduct/${id}`,getProductById);
+  // const [product, setProduct] = useState<Iproduct>();
 
-  useEffect(() => {
-    const productDetail = async () => {
-      try {
-        const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-        const product = await res.json();
-        console.log(product);
-        setProduct(product);
-      } catch (error: any) {
-        console.log(error);
-      }
-    };
-    productDetail();
-  }, [id]);
+  // useEffect(() => {
+  //   const productDetail = async () => {
+  //     try {
+  //       const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+  //       const product = await res.json();
+  //       console.log(product);
+  //       setProduct(product);
+  //     } catch (error: any) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   productDetail();
+  // }, [id]);
   return (
     <div>
-      <div className="border p-5 rounded-lg space-y-5">
+      <div className="border p-5 space-y-5 max-w-screen-sm shadow-lg rounded-xl mx-auto">
         <div className="flex items-center justify-center">
           <img
-            src={product?.image}
-            alt={product?.title}
-            className="h-32 w-32"
+            src={displayImage(product?.productImage)}
+            alt={product?.productName}
+            className="h-52 w-52"
           />
         </div>
         <div className="border-t mt-2">
-          <p className="font-bold capitalize">{product?.category}</p>
-          <p className="line-clamp-1">{product?.title}</p>
+          <p className="font-bold capitalize">{product?.productCategory?.categoryName}</p>
+          <p className="line-clamp-1">{product?.productName}</p>
           <div>
-            <span className="font-bold">Rating:</span> {product?.rating.rate},{" "}
-            {product?.rating.count}
+            <span className="font-bold">Rating:</span> {product?.productRating},
+            
           </div>
           <p>
-            <span className="font-bold">Price:</span> {product?.price}
+            <span className="font-bold">Price:</span> {product?.productPrice}
           </p>
-          <p className="line-clamp-2">{product?.description}</p>
+          <p className="line-clamp-2">{product?.productDescription}</p>
         </div>
         <div></div>
       </div>
+      {/* <RelatedProducts id={id}/> */}
     </div>
   );
 };

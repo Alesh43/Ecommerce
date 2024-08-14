@@ -1,12 +1,18 @@
 export interface Iproduct {
-    category : string,
-    description: string,
-    id : number,
-    image: string,
-    rating: {
-        rate: number,
-        count: number,
-    }
-    title:string,
-    price: number
+    productCategory: ICategory,
+    productDescription: string,
+    productName: string,
+    productPrice: string,
+    productRating: string,
+    productProduct: number,
+    createdAt: string,
+    productImage: string
+    _id: string
+
+}
+
+export interface ICategory{
+    _id: string
+    categoryName: string
+
 }

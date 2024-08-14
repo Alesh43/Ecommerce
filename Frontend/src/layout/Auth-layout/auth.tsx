@@ -13,7 +13,7 @@ const Authlayout = () => {
 
   useEffect(()=>{
   if(accessToken === undefined){
-    navigate('login')
+    navigate('/signin')
   }
 }, [accessToken, navigate]) 
   
