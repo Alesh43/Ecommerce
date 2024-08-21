@@ -8,6 +8,7 @@ export interface Iproduct {
     createdAt: string,
     productImage: string
     _id: string
+    totalProduct: number
 
 }
 

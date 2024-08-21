@@ -13,6 +13,8 @@ const cors = require("cors");
 const UserRoute = require("./Route/userRoute");
 const CategoryRoute = require('./Route/categoryRoute');
 const ProductRoute = require('./Route/productRoute');
+const OrderRoute = require('./Route/orderRoute');
+
 
 //....Server uses......//
 app.use(bodyParser.json())
@@ -24,6 +26,7 @@ app.use("/public/uploads", express.static(__dirname + '/public/uploads'))
 app.use('/api',UserRoute)
 app.use('/api',CategoryRoute);
 app.use('/api',ProductRoute);
+app.use('/api',OrderRoute);
 
 //......Server start index......//
 app.get('/', (req,res)=>{

@@ -88,6 +88,7 @@ exports.relatedProduct = async (req, res) => {
     return res.json({ error: "Failed to get product" }).status(400);
   }
 };
+
 exports.deleteProduct = async (req, res) => {
   let product = await ProductModel.findByIdAndDelete(req.params.id);
   if (!product) {

@@ -20,6 +20,7 @@ import Customers from "./Pages/Dashboard/customers/customers";
 import CustomerPage from "./Pages/Dashboard/customers/customers";
 import GetCategory from "./Pages/Dashboard/category/get-category";
 import GetOrder from "./Pages/Dashboard/orders/get-order";
+import UpdateProductPage from "./Pages/Dashboard/product/updateProduct/updateProduct";
 
 
 const App = () => {
@@ -52,6 +53,8 @@ const App = () => {
           {/* {product} */}
           <Route path="/dashboard/addProduct" element={<ProductForm/>} />
           <Route path="/dashboard/Products" element={<GetProduct/>} />
+          <Route path="/dashboard/update-product/:id" element={<UpdateProductPage/>} />
+
 
           {/* {customers} */}
           <Route path="/dashboard/customers" element={<CustomerPage/>} />
