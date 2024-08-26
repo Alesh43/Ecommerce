@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Iproduct } from "../../interface/product";
 import useSWR from "swr";
 import { getProductById } from "../../API/productApi";
-import { displayImage } from "../../utils/helper";
+import { displayImage, errorMessage } from "../../utils/helper";
 import RelatedProducts from "./related-products";
+import Button from "../reusable/button/button";
+import { toast } from "sonner";
+import axios from "axios";
+import { addProductToCart } from "../../redux/slice/order-slice";
+import { useAppDispatch } from "../../Hooks/redux";
 
 interface Props {
   id: string;
@@ -11,6 +16,18 @@ interface Props {
 
 const ProductDetail = ({ id }: Props) => {
   const {data:product} = useSWR(`getproduct/${id}`,getProductById);
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = useCallback(async()=>{
+    const product={
+      productId: id,
+      totalOrder: 1
+    }
+    
+    dispatch(addProductToCart(product))
+    toast.message("Added to cart")
+ 
+  },[dispatch,id])
   // const [product, setProduct] = useState<Iproduct>();
 
   // useEffect(() => {
@@ -48,7 +65,16 @@ const ProductDetail = ({ id }: Props) => {
           </p>
           <p className="line-clamp-2">{product?.productDescription}</p>
         </div>
-        <div></div>
+        <div>
+          <Button 
+          buttonType="button"
+          buttonColor={{primary:true}}
+          onClick={handleAddToCart}
+          >
+            
+            Add to Cart
+          </Button>
+        </div>
       </div>
       {/* <RelatedProducts id={id}/> */}
     </div>

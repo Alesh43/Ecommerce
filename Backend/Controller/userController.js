@@ -132,6 +132,7 @@ exports.login = async (req, res) => {
       name: checkUser.userDetail.firstName,
       id: checkUser._id,
       email: checkUser.email,
+      role: checkUser.role
     },
     process.env.SECRET_KEY,
     { expiresIn: "1d" }

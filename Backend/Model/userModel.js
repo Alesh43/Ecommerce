@@ -13,7 +13,9 @@ const mongoose = require('mongoose');
 
     role:{
         type: String,
-        default: false
+        default: "user",
+        enum: ['admin' , 'user']
+
     },
 
     isVerified:{

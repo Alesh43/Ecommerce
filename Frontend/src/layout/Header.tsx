@@ -34,7 +34,7 @@ const NavItems = [
 
 const Header = () => {
   
-  const {accessToken} = useAuth();
+  const {accessToken,role} = useAuth();
   
   const location = useLocation();
 
@@ -137,7 +137,7 @@ const Header = () => {
           </Link>
           </>
             :
-            <Link to="/Dashboard">
+            <Link to={`${role&&role ==="admin"?"/Dashboard":"/user-dashboard"}`}>
             <Button
               buttonType={"button"}
               buttonColor={isLogin ?{ primary: true }:{

@@ -8,7 +8,7 @@ import { useAuth } from '../../Hooks/useAuth';
 
 const Authlayout = () => {
   const navigate = useNavigate();
-  const {accessToken} = useAuth();
+  const {accessToken,role} = useAuth();
   console.log(accessToken)
 
   useEffect(()=>{
@@ -19,7 +19,7 @@ const Authlayout = () => {
   
   return (
     <div className=" w-full flex ">
-      <SideBar/>
+      <SideBar role={role}/>
       
       <div className='ml-72 w-full overflow-hidden'>
       <Outlet/>

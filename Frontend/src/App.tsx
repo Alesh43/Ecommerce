@@ -21,57 +21,63 @@ import CustomerPage from "./Pages/Dashboard/customers/customers";
 import GetCategory from "./Pages/Dashboard/category/get-category";
 import GetOrder from "./Pages/Dashboard/orders/get-order";
 import UpdateProductPage from "./Pages/Dashboard/product/updateProduct/updateProduct";
-
+import Userlayout from "./layout/user-layout/userLayout";
+import Adminlayout from "./layout/user-layout/adminLayout";
+import UserDashboard from "./Pages/Dashboard/user-dashboard/userDashboard";
+import Cart from "./Pages/Dashboard/carts/Cart";
 
 const App = () => {
   return (
     <BrowserRouter>
-      
-    
-      
       {/* Default layout */}
       <Routes>
-      <Route element={<Defaultlayout/>}>
-        <Route path="/" element={<Home />} />
-        <Route path="/Products" element={<ProductPage/>} />
-        <Route path="/Products/:id" element={<SingleProduct/>} />
-        <Route path="/Pricing" element={<Pricing/>} />
-        <Route path="/Contact" element={<Contact/>} />
-        <Route path="/Post" element={<Post/>} />
-        <Route path="/Post/:id" element={<SinglePost/>} />
-        <Route path="/Register" element={<RegisterForm/>} />
-        <Route path="/Signin" element={<SigninForm/>} />
-        <Route path="/Contactpage" element={<ContactPage/>} />
-      </Route>
-    
-      <Route path="*" element={<NotFound/>} />
-        
-      {/* Authentication Layout */}
-        <Route element={<Authlayout/>}>
-          <Route path="/dashboard" element={<Dashboard/>} />
-          
-          {/* {product} */}
-          <Route path="/dashboard/addProduct" element={<ProductForm/>} />
-          <Route path="/dashboard/Products" element={<GetProduct/>} />
-          <Route path="/dashboard/update-product/:id" element={<UpdateProductPage/>} />
+        <Route element={<Defaultlayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/Products" element={<ProductPage />} />
+          <Route path="/Products/:id" element={<SingleProduct />} />
+          <Route path="/Pricing" element={<Pricing />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/Post" element={<Post />} />
+          <Route path="/Post/:id" element={<SinglePost />} />
+          <Route path="/Register" element={<RegisterForm />} />
+          <Route path="/Signin" element={<SigninForm />} />
+          <Route path="/Contactpage" element={<ContactPage />} />
+        </Route>
 
+        <Route path="*" element={<NotFound />} />
 
-          {/* {customers} */}
-          <Route path="/dashboard/customers" element={<CustomerPage/>} />
+        {/* Authentication Layout */}
+        <Route element={<Authlayout />}>
+          <Route element={<Adminlayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* {category} */}
-          <Route path="/dashboard/category" element={<GetCategory/>} />
+            {/* {product} */}
+            <Route path="/dashboard/addProduct" element={<ProductForm />} />
+            <Route path="/dashboard/Products" element={<GetProduct />} />
+            <Route
+              path="/dashboard/update-product/:id"
+              element={<UpdateProductPage />}
+            />
 
-         {/* {orders} */}
-          <Route path="/dashboard/orders" element={<GetOrder/>} />
+            {/* {customers} */}
+            <Route path="/dashboard/customers" element={<CustomerPage />} />
 
-          
+            {/* {category} */}
+            <Route path="/dashboard/category" element={<GetCategory />} />
+
+            {/* {orders} */}
+            <Route path="/dashboard/orders" element={<GetOrder />} />
+          </Route>
+
+          <Route element={<Userlayout />}>
+            <Route path="/user-dashboard" element={<UserDashboard/>} />
+            <Route path="/carts" element={<Cart/>} />
+
+          </Route>
+
         </Route>
       </Routes>
     </BrowserRouter>
-        
-        
-        
   );
 };
 
