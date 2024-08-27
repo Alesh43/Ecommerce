@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import axios from "axios";
 import { addProductToCart } from "../../redux/slice/order-slice";
 import { useAppDispatch } from "../../Hooks/redux";
+import { useAuth } from "../../Hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   id: string;
@@ -17,17 +19,24 @@ interface Props {
 const ProductDetail = ({ id }: Props) => {
   const {data:product} = useSWR(`getproduct/${id}`,getProductById);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const {accessToken} = useAuth()
 
   const handleAddToCart = useCallback(async()=>{
     const product={
       productId: id,
       totalOrder: 1
     }
-    
+    if(accessToken){
     dispatch(addProductToCart(product))
     toast.message("Added to cart")
+    } else{
+      toast.error('Please login')
+      navigate('/Signin')
+    }
  
-  },[dispatch,id])
+  },[accessToken,dispatch,id])
   // const [product, setProduct] = useState<Iproduct>();
 
   // useEffect(() => {

@@ -3,13 +3,14 @@ import { Iproduct } from "../../interface/product";
 import { AppConfig } from "../../config/app.config";
 import { useAuth } from "../../Hooks/useAuth";
 import axios from "axios";
+import { IOrder } from "../../interface/order";
 
-interface IInitialState {
-    products: Iproduct[]
+interface InitialState {
+    orderProducts: IOrder[]
 }
 
-const initialState: IInitialState = {
-    products: []
+const initialState: InitialState = {
+    orderProducts: []
 }
 
 export const getOrderProducts = createAsyncThunk(
@@ -70,11 +71,11 @@ export const OrderSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(getOrderProducts.fulfilled,(state,action)=>{
-            state.products = action.payload.data
+            state.orderProducts = action.payload.data
         })
         builder.addCase(addProductToCart.fulfilled,(state,action)=>{
             const product = action.payload.data;
-            state.products.push(product)
+            state.orderProducts.push(product)
 
         })
     },
