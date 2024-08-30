@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Iproduct } from "../../interface/product";
 import { AppConfig } from "../../config/app.config";
 import { useAuth } from "../../Hooks/useAuth";
@@ -62,11 +62,45 @@ export const addProductToCart = createAsyncThunk(
     }
 )
 
+export const updateProductToCart = createAsyncThunk(
+    'update-cart',
+    async({orderId, totalOrder}:{orderId: string, totalOrder:number})=>{
+        const {accessToken} = useAuth()
+        try{
+            const {data}= await axios.put(`${AppConfig.API_URL}/update-order/${orderId}`,{
+                headers:{
+                    'Authorization':`Bearer${accessToken}`
+                },
+               totalOrder:totalOrder
+            })
+
+            return{
+                success: true,
+                message: "Added to cart",
+                data
+            }
+        } 
+            catch(error){
+                return{
+                    success:false,
+                    message: "Failed to add orders"
+                }
+            }
+        
+    }
+)
+
 
 export const OrderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
+        setRemoveProduct:(state,action:PayloadAction<IOrder>)=>{
+            const updatedProduct = action.payload;
+            const orders = state.orderProducts;
+            const removeOrder = orders.filter((o)=>o._id !== updatedProduct._id)
+            state.orderProducts = removeOrder
+        }
 
     },
     extraReducers(builder) {
@@ -78,7 +112,19 @@ export const OrderSlice = createSlice({
             state.orderProducts.push(product)
 
         })
+        builder.addCase(updateProductToCart.fulfilled, (state, action) => {
+            if (action.payload.success) {
+              const updatedProduct = action.payload.data;
+              const orders = state.orderProducts;
+              if (updatedProduct) {
+                const index = orders.findIndex((o) => o._id === updatedProduct._id);
+                if (index !== -1) {
+                  orders[index] = updatedProduct;
+                }
+              }
+            }
+          })
     },
 })
-
+export const {setRemoveProduct} = OrderSlice.actions;
 export default OrderSlice.reducer;
