@@ -25,6 +25,8 @@ import Userlayout from "./layout/user-layout/userLayout";
 import Adminlayout from "./layout/user-layout/adminLayout";
 import UserDashboard from "./Pages/Dashboard/user-dashboard/userDashboard";
 import Cart from "./Pages/Dashboard/carts/Cart";
+import OrderRequests from "./Pages/Dashboard/shipping/order-requests";
+import Shipping from "./Pages/Dashboard/shipping/shipping";
 
 const App = () => {
   return (
@@ -72,6 +74,10 @@ const App = () => {
           <Route element={<Userlayout />}>
             <Route path="/user-dashboard" element={<UserDashboard/>} />
             <Route path="/carts" element={<Cart/>} />
+
+            <Route path="/shipping" element={<OrderRequests />} />
+            <Route path="/shipping/:id" element={<Shipping />} />
+
 
           </Route>
 

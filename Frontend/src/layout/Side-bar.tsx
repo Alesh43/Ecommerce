@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import {
   Home,
   LineChart,
@@ -6,13 +7,21 @@ import {
   ShoppingCart,
   Users,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Button from "../component/reusable/button/button";
 
 interface Props {
   role?: string;
 }
 
 export function SideBar({ role }: Props) {
+  const navigate = useNavigate();
+  const logOut = () => {
+    Cookies.remove("userId");
+    Cookies.remove("role");
+    Cookies.remove("accessToken");
+    navigate("/login");
+  };
   return (
     <div className="fixed w-[240px] bg-white h-screen">
       <div className="hidden border-r bg-muted/40 md:block h-full">
@@ -68,10 +77,9 @@ export function SideBar({ role }: Props) {
                   </Link>
                 </>
               )}
-              {
-                role=="user" &&
+              {role == "user" && (
                 <>
-                   <Link
+                  <Link
                     to="/user-dashboard"
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                   >
@@ -85,11 +93,31 @@ export function SideBar({ role }: Props) {
                     <Home className="h-4 w-4" />
                     Carts
                   </Link>
+                  <Link
+                    to="/shipping"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                  >
+                    <Home className="h-4 w-4" />
+                    Shipping
+                  </Link>
                 </>
-              }
+              )}
             </nav>
           </div>
+          <div className="mb-10 p-4 w-full">
+          <Button
+            buttonType={"button"}
+            className="w-full"
+            onClick={logOut}
+            buttonColor={{
+              secondary: true,
+            }}
+          >
+            Logout
+          </Button>
         </div>
+        </div>
+   
       </div>
     </div>
   );

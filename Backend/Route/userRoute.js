@@ -11,6 +11,7 @@ const {
   forgotPassword,
   resetPassword,
   resendConfirmation,
+  rateProductUser,
 } = require("../Controller/userController");
 const { jwtMiddleware } = require("../middleware/middleware");
 const router = express.Router();
@@ -25,5 +26,7 @@ router.get('/confirm/:token',confirmUser);
 router.post('/forgot-password/',forgotPassword);
 router.post('/reset-password/:token', resetPassword);
 router.post('/resend-verification',resendConfirmation)
+
+router.put('/rate/:id', rateProductUser);
 
 module.exports = router;

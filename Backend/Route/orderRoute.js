@@ -10,6 +10,10 @@ const {
   createOrderRequest,
   getOrderRequestById,
   getOrderRequest,
+  getOrderRequestByUser,
+  createPaymentIntent,
+  updateOrderRequest,
+  completeOrder,
 } = require("../Controller/orderRequestController");
 
 const router = express.Router();
@@ -22,6 +26,12 @@ router.delete("/delete-order/:orderId", deleteOrderedProduct);
 
 router.post("/order-request", createOrderRequest);
 router.get("/order-request/:id", getOrderRequestById);
+router.get("/order-request/user/:userId", getOrderRequestByUser);
 router.get("/order-request", getOrderRequest);
+
+router.put("/stripe-payment", createPaymentIntent);
+router.put("/order-request/:id", updateOrderRequest);
+
+router.put('/complete-order', completeOrder);
 
 module.exports = router;

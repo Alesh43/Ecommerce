@@ -37,7 +37,14 @@ const productSchema = new mongoose.Schema({
     totalProduct:{
         type:Number,
         default:0
-    }
+    },
+
+    tags: [
+        {
+          type: String,
+          trim: true
+        }
+      ],
 
 },{timestamps: true})
 

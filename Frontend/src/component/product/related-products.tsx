@@ -4,6 +4,7 @@ import { AppConfig } from "../../config/app.config";
 import { Link } from "react-router-dom";
 import { displayImage } from "../../utils/helper";
 import useSWR from "swr";
+import StarRating from "../ratings/rating";
 
 interface Props {
   id: string;
@@ -17,7 +18,7 @@ const RelatedProducts = ({ id }: Props) => {
         <div key={product._id} className="border p-5 rounded-lg space-y-5">
           <div className="flex items-center justify-center">
             <img
-              src={displayImage(product.productImage)}
+              src={product.productImage||displayImage(product?.productImage)}
               alt={product?.productName}
               className="h-32 w-32"
             />
@@ -27,9 +28,9 @@ const RelatedProducts = ({ id }: Props) => {
               {product?.productCategory?.categoryName}
             </p>
             <p className="line-clamp-1">{product.productName}</p>
-            <div>
-              <span className="font-bold">Rating:</span> {product.productRating}
-            </div>
+            <div><span className="font-bold">Rating:</span> {product.productRating}
+                <StarRating count={product?.productRating || 0} />
+              </div>
             <p>
               <span className="font-bold">Price:</span> {product.productPrice}
             </p>
